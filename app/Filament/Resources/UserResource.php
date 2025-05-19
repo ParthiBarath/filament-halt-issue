@@ -57,6 +57,10 @@ class UserResource extends Resource
 
                         $record->update($data);
 
+                        if (empty($data['email'])) {
+                            $action->halt(shouldRollBackDatabaseTransaction: true); // Here in this mountable action halt correctly rollback the database transacion because the action halt method has shouldRollBackDatabaseTransaction parameter
+                        }
+
                         DB::commit();
 
                         return $record;
